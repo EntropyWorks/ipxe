@@ -1,0 +1,13 @@
+{% from "_formhelpers.j2" import render_field %}
+{% extends "layout.j2" %}
+{% block content %}
+<form method=post action=/servers/123 >
+    <dl>
+        {{ render_field(form.mac) }}
+        {{ render_field(form.hostname) }}
+        {{ render_field(form.state) }}
+        {{ render_field(form.profile) }}
+    </dl>
+    <p><input type=submit value=Create />
+</form>
+{% endblock %}
