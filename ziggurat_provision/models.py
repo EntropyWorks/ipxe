@@ -9,7 +9,9 @@ MAC_RE = re.compile(r'^([0-9A-F]{2})(:[0-9A-F]{2}){5}$', re.IGNORECASE)
 
 SERVER_STATES = ('IN_USE', 'MAINTENANCE', 'REBUILD')
 
-SERVER_PROFILES = {}
+SERVER_PROFILES = {
+    "KVM": None
+}
 
 
 def unix_time(dt):
@@ -43,36 +45,6 @@ class Server(db.Model):
         self.profile = profile
         self.created_at = created_at
         self.updated_at = updated_at
-
-        is_valid = (Server.validate_mac_address(self.mac_address) and
-                    Server.validate_server_profile(self.profile) and
-                    Server.validate_server_state(self.state))
-
-        if not is_valid: raise ValueError("invalid values passed...")
-
-    def serialize(self):
-        return {
-            u"mac_address": self.mac_address,
-            u"hostname": self.hostname,
-            u"profile": self.profile,
-            u"state": self.state,
-            u"created_at": unix_time(self.created_at),
-            u"updated_at": unix_time(self.updated_at)
-        }
-
-    @staticmethod
-    def validate_mac_address(mac_address):
-        #mac_address = mac_address.replace('-', ':')
-        matches = MAC_RE.match(mac_address)
-        return True if matches else False
-
-    @staticmethod
-    def validate_server_profile(profile):
-        return True if profile in SERVER_PROFILES.keys() else False
-
-    @staticmethod
-    def validate_server_state(state):
-        return True if state in SERVER_STATES else False
 
     def __repr__(self):
         return '<Server %r>' % self.mac_address

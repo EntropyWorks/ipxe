@@ -4,7 +4,16 @@ from ziggurat_provision import db, Server
 
 db.create_all()
 
-a = Server('64-14-00-00-01', 'vm01', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+a = Server('64:14:00:00:00:01', 'vm01', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+b = Server('64:14:00:00:00:02', 'vm02', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+c = Server('64:14:00:00:00:03', 'vm03', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+d = Server('64:14:00:00:00:04', 'vm04', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+e = Server('64:14:00:00:00:05', 'vm05', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+f = Server('64:14:00:00:00:06', 'vm06', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+g = Server('64:14:00:00:00:07', 'vm07', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+h = Server('64:14:00:00:00:08', 'vm08', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+i = Server('64:14:00:00:00:09', 'vm09', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
+j = Server('64:14:00:00:00:10', 'vm10', 'IN_USE', 'KVM', datetime.datetime.utcnow(), datetime.datetime.utcnow())
 
 print a
 
