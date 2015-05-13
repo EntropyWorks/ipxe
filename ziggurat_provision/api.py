@@ -1,7 +1,7 @@
 import re
 
 from datetime import datetime
-from flask import abort, jsonify, make_response, request
+from flask import abort, jsonify, make_response, render_template, request
 from flask.ext.restful import fields, marshal, marshal_with, reqparse, Resource
 
 from . import rest_api
@@ -60,6 +60,16 @@ def output_plain(data, code, headers=None):
     resp.headers.extend(headers or {})
     return resp
 
+class KickstartAPI(Resource):
+    def __init__(self):
+        self.reqparse = update_parser
+        super(KickstartAPI, self).__init__()
+        self.representations = { 'text/plain': output_plain }
+
+    def get(self, profile):
+        return render_template('kickstart/kickstart.j2', kickstart={'latest_enable': True, 'hardware': 'vmware'},
+                                profile=profile), 200
+
 
 class ServerAPI(Resource):
     def __init__(self):
@@ -113,7 +123,7 @@ class ServerListAPI(Resource):
         self.reqparse = create_parser
         super(ServerListAPI, self).__init__()
 
-    def get(self):        
+    def get(self):
         return marshal(Server.query.all(), server_fields), 200
 
     def post(self):

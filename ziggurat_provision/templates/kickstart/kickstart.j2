@@ -1,0 +1,30 @@
+# !!! Cloud Linux Engineering Kickstart
+
+# --- Kickstart Debug ---
+{{ profile }}
+
+# -- start | setup
+
+{% include 'kickstart/setup.j2' %}
+
+# --   end | setup
+
+# -- start | install_media
+
+{% include 'kickstart/install_media.j2' %}
+
+# --   end | install_media
+
+# -- start | packages
+
+{% include 'kickstart/packages.j2' %}
+
+# --   end | packages
+
+# -- start | disk layout
+{% include 'kickstart/disk_layout.j2' %}
+# --   end | disk layout
+
+# -- start | post
+{% include 'kickstart/post.j2' %}
+# --   end | post

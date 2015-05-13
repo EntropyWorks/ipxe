@@ -1,0 +1,32 @@
+# -- start | packages_base
+
+{% include 'kickstart/packages_base.j2' %}
+
+# --   end | packages_base
+
+{%- if kickstart.hardware_type == 'kvm' %}
+
+# -- start | packages_kvm
+
+{% include 'kickstart/packages_kvm.j2' %}
+
+# --   end | packages_kvm
+{%- endif %}
+
+{%- if kickstart.hardware_type == 'physical' %}
+
+# -- start | packages_physical
+
+{% include 'kickstart/packages_physical.j2' %}
+
+# --   end | packages_physical
+{%- endif %}
+
+{%- if kickstart.hardware_type == 'vmware' %}
+
+# -- start | packages_vmware
+
+{% include 'kickstart/packages_vmware.j2' %}
+
+# --   end | packages_vmware
+{%- endif %}

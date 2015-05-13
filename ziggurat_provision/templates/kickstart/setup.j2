@@ -1,0 +1,17 @@
+### system authorization
+auth --enableshadow --passlago=sha512
+rootpw --iscrypted {{ kickstart.root_password }}
+
+### kickstart configuration
+firewall --disabled
+firstboot --disabled
+keyboard --vckeymap=us --xlayouts="us"
+lang en_US.UTF-8
+network --bootproto=dhcp
+### move to enforcing
+selinux --disabled
+services --disabled="" --enabled="network,sshd"
+timezone Etc/UTC --isUtc
+
+### reboot after install
+reboot

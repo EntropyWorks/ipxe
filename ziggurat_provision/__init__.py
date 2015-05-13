@@ -11,7 +11,8 @@ db.init_app(app)
 
 rest_api = restful.Api(app)
 
-from .api import ServerAPI, ServerListAPI
+from .api import KickstartAPI, ServerAPI, ServerListAPI
 
+rest_api.add_resource(KickstartAPI, '/kickstarts/<profile>', endpoint='kickstart')
 rest_api.add_resource(ServerAPI, '/servers/<mac_address>', endpoint='server')
 rest_api.add_resource(ServerListAPI, '/servers', endpoint='servers')

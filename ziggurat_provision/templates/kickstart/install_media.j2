@@ -1,0 +1,8 @@
+### url contains only stage2 and pxe images
+url --url {{ kickstart.os_url }}
+
+repo --name=jpmc-lrh7-current --baseurl={{ kickstart.jpmc_lrh7_current_url }}
+repo --name=jpmc-lrh7-mandatory --baseurl={{ kickstart.jpmc_lrh7_mandatory_url }}
+{%- if kickstart.latest_enable %}
+repo --name=latest --baseurl={{ kickstart.latest_url }}
+{%- endif %}
