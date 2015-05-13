@@ -3,25 +3,9 @@ import re
 from datetime import datetime
 from flask.ext.sqlalchemy import SQLAlchemy
 
+from .content import SERVER_PROFILES, SERVER_STATES
+
 db = SQLAlchemy()
-
-MAC_RE = re.compile(r'^([0-9A-F]{2})(:[0-9A-F]{2}){5}$', re.IGNORECASE)
-
-SERVER_STATES = ('IN_USE', 'MAINTENANCE', 'REBUILD')
-
-SERVER_PROFILES = {
-    "KVM": None
-}
-
-
-def unix_time(dt):
-    epoch = datetime.utcfromtimestamp(0)
-    delta = dt - epoch
-    return long(delta.total_seconds())
-
-
-def unix_time_millis(dt):
-    return long(unix_time(dt) * 1000.0)
 
 
 class Server(db.Model):

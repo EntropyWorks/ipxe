@@ -32,3 +32,9 @@ DEFAULT_KICKSTART = {
 }
 
 default_kickstart = DEFAULT_KICKSTART
+
+SERVER_STATES = ('IN_USE', 'MAINTENANCE', 'REBUILD')
+
+SERVER_PROFILES = {
+    "KVM": None
+}

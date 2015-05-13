@@ -5,8 +5,11 @@ from flask import abort, jsonify, make_response, render_template, request
 from flask.ext.restful import fields, marshal, marshal_with, reqparse, Resource
 
 from . import app, rest_api
-from .content import default_kickstart
-from .models import db, MAC_RE, Server, SERVER_STATES, SERVER_PROFILES
+from .content import default_kickstart, SERVER_PROFILES, SERVER_STATES
+from .models import db, Server
+
+_mac_re = re.compile(r'^([0-9A-F]{2})(:[0-9A-F]{2}){5}$', re.IGNORECASE)
+
 
 def mac_address(mac_address):
     matches = MAC_RE.match(mac_address)
@@ -60,22 +63,23 @@ def output_plain(data, code, headers=None):
     resp.headers.extend(headers or {})
     return resp
 
+
 class KickstartAPI(Resource):
     def __init__(self):
         self.reqparse = update_parser
         super(KickstartAPI, self).__init__()
-        self.representations = { 'text/plain': output_plain }
+        self.representations = {'text/plain': output_plain}
 
     def get(self, profile):
-        return render_template('kickstart/kickstart.j2', kickstart=default_kickstart,
-                                profile=profile), 200
+        return render_template('kickstart/kickstart.j2',
+                               kickstart=default_kickstart,
+                               profile=profile), 200
 
 
 class ServerAPI(Resource):
     def __init__(self):
         self.reqparse = update_parser
         super(ServerAPI, self).__init__()
-        #self.representations = { 'text/plain': output_plain }
 
     def delete(self, mac_address):
         server = Server.query.get(mac_address)
