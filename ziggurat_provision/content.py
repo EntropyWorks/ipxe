@@ -1,31 +1,34 @@
-rhel71_os_base = "/ziggurat-rhel-7/os/7.1/x86_64"
+from . import app
 
-rhel71_base_options = [
-    'inst.text',
-    'inst.geoloc=0',
-    'ks.sendmac',
-    'ks.device=bootif',
+### copy turns into a dict
+_config = app.config.copy()
+_media_server = _config.get('MEDIA_SERVER', 'NO_MEDIA_SERVER_PASSED')
 
-]
+kickstart_os_url = 'http://%s/ziggurat-rhel-7/os/7.1/x86_64' % _media_server
 
-zg_hardware_profile = ""
-
-dell_r630_bom1_config_a = {
-    'zg_disk_layout': 'physical_120',
-    'zg_boot_disk_a': '',
-    'zg_boot_disk_b': '',
-    'zg_hardware': '',
+###
+### lets rename to jpmc-mandatory and jpmc-current
+###
+kickstart_repo_urls = {
+    'blended-ziggurat': 'http://%s/ziggurat-rhel-7/blended-ziggurat' % _media_server,
+    'jpmc-lrh7-current': 'http://%s/ziggurat-rhel-7/jpmc-lrh7-current' % _media_server,
+    'jpmc-lrh7-mandatory': 'http://%s/ziggurat-rhel-7/jpmc-lrh7-mandatory' % _media_server,
+    'latest': 'http://%s/ziggurat-rhel-7/latest' % _media_server,
 }
 
-states = ('IN_USE', 'MAINTENANCE', 'REBUILD')
+profiles = {}
+states = []
 
-profiles = {
-    "dell.r630.bom1.config_a": None,
-    "dell.r630.bom2.config_a": None,
-    "dell.r630.bom3.config_a": None,
-    "dell.r730xd.bom1.config_a": None,
-    "dell.r730xd.bom1.config_b": None,
-    "hp.dl360.bom1.config_a": None,
-    "hp.dl360.bom2.config_a": None,
-    "hp.dl360.bom3.config_a": None,
+DEFAULT_KICKSTART = {
+    'boot_disk_a': 'sda',
+    'boot_disk_b': 'sdb',
+    'cloud_init': False,
+    'disk_layout': 'physical_120',
+    'efi': False,
+    'hardware_type': 'physical',
+    'os_url': kickstart_os_url,
+    'repo_urls': kickstart_repo_urls,
+    'root_password': '!!!',
 }
+
+default_kickstart = DEFAULT_KICKSTART

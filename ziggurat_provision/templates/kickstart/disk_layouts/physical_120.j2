@@ -1,0 +1,19 @@
+bootloader --location=mbr --driveorder={{ kickstart.boot_disk_a }} --boot-drive={{ kickstart.boot_disk_a }}
+clearpart --all
+zerombr
+
+part /boot --fstype=xfs --size=256 --ondisk={{ kickstart.boot_disk_a }}
+{%- if kickstart.efi %}
+part /boot/efi --fstype=efi --size=256 --ondisk={{ kickstart.boot_disk_a }}
+{%- endif %}
+part pv.100000 --size=102400 --ondisk={{ kickstart.boot_disk_a }}
+
+volgroup vg_root --pesize=32768 pv.100000 --reserved-percent=10
+
+logvol /              --fstype=xfs --name=lv_root          --vgname=vg_root --size=10240
+logvol /tmp           --fstype=xfs --name=lv_tmp           --vgname=vg_root --size=1024
+logvol /var           --fstype=xfs --name=lv_var           --vgname=vg_root --size=32768
+logvol /var/log       --fstype=xfs --name=lv_var_log       --vgname=vg_root --size=8192
+logvol /var/log/audit --fstype=xfs --name=lv_var_log_audit --vgname=vg_root --size=1024
+logvol /var/tmp       --fstype=xfs --name=lv_var_tmp       --vgname=vg_root --size=1024
+logvol swap                        --name=lv_swap          --vgname=vg_root --size=4096

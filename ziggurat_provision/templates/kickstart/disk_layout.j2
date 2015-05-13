@@ -1,1 +1,9 @@
-disk_layout.j2
+{%- if kickstart.disk_layout == 'physical_120' %}
+
+# -- start | disk_layouts/physical_120
+
+{% include 'kickstart/disk_layouts/physical_120.j2' %}
+
+# --   end | disk_layouts/physical_120
+
+{%- endif %}

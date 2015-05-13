@@ -4,9 +4,9 @@ from datetime import datetime
 from flask import abort, jsonify, make_response, render_template, request
 from flask.ext.restful import fields, marshal, marshal_with, reqparse, Resource
 
-from . import rest_api
+from . import app, rest_api
+from .content import default_kickstart
 from .models import db, MAC_RE, Server, SERVER_STATES, SERVER_PROFILES
-
 
 def mac_address(mac_address):
     matches = MAC_RE.match(mac_address)
@@ -67,7 +67,7 @@ class KickstartAPI(Resource):
         self.representations = { 'text/plain': output_plain }
 
     def get(self, profile):
-        return render_template('kickstart/kickstart.j2', kickstart={'latest_enable': True, 'hardware': 'vmware'},
+        return render_template('kickstart/kickstart.j2', kickstart=default_kickstart,
                                 profile=profile), 200
 
 
